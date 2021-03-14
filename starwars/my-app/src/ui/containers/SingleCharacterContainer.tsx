@@ -42,26 +42,20 @@ const SingleCharacterContainer: FC<SingleCharacterProps> = ({ history }) => {
   }, []);
 
   useEffect(() => {
-    character.films &&
+    character?.films &&
       fetchFilms(character.films).then((films) => setFilms(films))
   }, [character]);
 
   return (
     <Body>
       <StarWarsLogo src="https://3dwarehouse.sketchup.com/warehouse/v1.0/publiccontent/b6d0cc66-d8b7-42c0-985d-48c32d3d8de6" />
-      {character.films ? <CharacterCard
+      <CharacterCard
         isSingleCharacter={true}
         history={history}
+        films={films?.films}
         character={character}
         onClick={handleClick}
-      /> :
-      <CharacterCard
-      isSingleCharacter={true}
-      history={history}
-      films={films?.films}
-      character={character}
-      onClick={handleClick}
-    />}
+      />
     </Body>
   );
 };

@@ -8,7 +8,6 @@ import {
 } from "../styledComponents";
 import { Character } from "../../containers/App";
 
-
 interface CardProps {
   history: History;
   onClick: Function;
@@ -22,7 +21,6 @@ interface RootState {
   isOn: boolean;
 }
 
-
 const CharacterCard: FC<CardProps> = ({
   history,
   onClick,
@@ -31,7 +29,6 @@ const CharacterCard: FC<CardProps> = ({
   index,
   films,
 }) => {
- 
   return (
     <CardBox>
       <CharacterName>{character.name}</CharacterName>
@@ -40,12 +37,12 @@ const CharacterCard: FC<CardProps> = ({
           <CharacterStats>Gender: {character.gender}</CharacterStats>
           <CharacterStats>Height: {character.height}</CharacterStats>
           <CharacterStats>Films:</CharacterStats>
-          {films && films.map((film) => (
-            <CharacterStats style={{ fontSize: "18px" }}>
-             
-              {film}
-            </CharacterStats>
-          ))}
+          {films &&
+            films.map((film, index: number) => (
+              <CharacterStats style={{ fontSize: "18px" }} key={index}>
+                {film}
+              </CharacterStats>
+            ))}
         </>
       )}
       <Button
