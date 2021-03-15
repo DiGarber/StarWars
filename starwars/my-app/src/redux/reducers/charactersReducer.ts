@@ -1,4 +1,10 @@
-import { FETCH_CHARACTER, FETCH_CHARACTERS, SET_INDEX } from "../constants";
+import {
+  FETCH_CHARACTER,
+  FETCH_CHARACTERS,
+  SET_INDEX,
+  SET_NEXT,
+  SET_PREVIOUS,
+} from "../constants";
 
 interface Action {
   payload: Character | Character[];
@@ -19,6 +25,8 @@ export interface State {
   characters: Character[];
   singleCharacter: Character;
   currentCharacterIndex: number;
+  next: string;
+  previous: string;
 }
 
 const initialState: State = {
@@ -33,6 +41,8 @@ const initialState: State = {
     films: [],
   },
   currentCharacterIndex: 0,
+  next: "",
+  previous: "",
 };
 
 export default function (state = initialState, action: Action) {
@@ -43,6 +53,10 @@ export default function (state = initialState, action: Action) {
       return { ...state, singleCharacter: action.payload };
     case SET_INDEX:
       return { ...state, currentCharacterIndex: action.payload };
+    case SET_NEXT:
+      return { ...state, next: action.payload };
+    case SET_PREVIOUS:
+      return { ...state, previous: action.payload };
     default:
       return state;
   }

@@ -29,9 +29,18 @@ interface RootState {
   isOn: boolean;
 }
 
+type PageProp = {
+  page: number;
+};
+
+type PaginationProp = {
+  hasNext: boolean;
+};
+
 const App: FC<AppProps> = ({ history }) => {
-  const [results, setResults] = useState([]);
-  const { characters } = useSelector(
+  const [page, setPage] = useState<PageProp>({ page: 0 });
+  const [isNext, setIsNext] = useState<PaginationProp>({ hasNext: true });
+  const { characters, next, previous } = useSelector(
     (state: RootStateOrAny) => state.charactersReducer
   );
   const dispatch = useDispatch();
@@ -41,12 +50,17 @@ const App: FC<AppProps> = ({ history }) => {
     history.push(`/${name}`);
   };
 
+  const handlePage = (url: string) => {
+    dispatch(fetchCharacters(url));
+  };
+
   useEffect(() => {
-    dispatch(fetchCharacters());
+    dispatch(fetchCharacters("https://swapi.dev/api/people/"));
   }, []);
 
+
+
   return (
-    
     <Body>
       <StarWarsLogo src="https://3dwarehouse.sketchup.com/warehouse/v1.0/publiccontent/b6d0cc66-d8b7-42c0-985d-48c32d3d8de6" />
       <div
@@ -70,6 +84,24 @@ const App: FC<AppProps> = ({ history }) => {
               onClick={handleClick}
             ></CharacterCard>
           ))}
+      </div>
+      <div>
+        {page.page !== 0 ? (
+          <Button onClick={() => {
+            handlePage(previous)
+            setPage({page: page.page - 1})
+            }} style={{ alignSelf: "flex-start", marginTop: "30px" }}>
+            Previous
+          </Button>
+        ) : null}
+        {isNext ? (
+          <Button onClick={() =>{
+            handlePage(next)
+            setPage({page: page.page + 1})
+            }} style={{ alignSelf: "flex-end", marginTop: "5px" }}>
+            Next
+          </Button>
+        ) : null}
       </div>
     </Body>
   );

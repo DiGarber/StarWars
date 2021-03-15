@@ -39,7 +39,7 @@ const CharacterCard: FC<CardProps> = ({
           <CharacterStats>Films:</CharacterStats>
           {films &&
             films.map((film, index: number) => (
-              <CharacterStats style={{ fontSize: "18px" }} key={index}>
+              <CharacterStats style={{ fontSize: "18px" }} key={film}>
                 {film}
               </CharacterStats>
             ))}
